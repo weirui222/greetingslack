@@ -66,11 +66,16 @@ def on_open(ws):
 
 
 if __name__ == "__main__":
+    root_logger = logging.getLogger()
+    root_logger.setLevel(logging.DEBUG)
+
     logger = logging.getLogger("slack-bot")
     logger.setLevel(logging.DEBUG)
+    logger.propagate = True
 
     wsLogger = logging.getLogger("websocket")
     wsLogger.setLevel(logging.DEBUG)
+    wsLogger.propagate = True
 
     r = start_rtm()
     logger.info("WebSocket URL:", r)
