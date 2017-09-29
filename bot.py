@@ -27,13 +27,13 @@ def parse_join(message):
     m = json.loads(message)
     if (m['type'] == "member_joined_channel"):
         if(m['channel'] == "C4XU7ULUA"):
-            x = requests.get("https://concur-blue.slack.com/api/im.open?token="+TOKEN+"&user="+m["user"]["id"])
+            x = requests.get("https://slack.com/api/im.open?token="+TOKEN+"&user="+m["user"]["id"])
             x = x.json()
             x = x["channel"]["id"]
             if (UNFURL.lower() == "false"):
-              xx = requests.post("https://concur-blue.slack.com/api/chat.postMessage?token="+TOKEN+"&channel="+x+"&text="+urllib.quote(MESSAGE)+"&parse=full&as_user=true&unfurl_links=false")
+              xx = requests.post("https://slack.com/api/chat.postMessage?token="+TOKEN+"&channel="+x+"&text="+urllib.quote(MESSAGE)+"&parse=full&as_user=true&unfurl_links=false")
             else:
-              xx = requests.post("https://concur-blue.slack.com/api/chat.postMessage?token="+TOKEN+"&channel="+x+"&text="+urllib.quote(MESSAGE)+"&parse=full&as_user=true")
+              xx = requests.post("https://slack.com/api/chat.postMessage?token="+TOKEN+"&channel="+x+"&text="+urllib.quote(MESSAGE)+"&parse=full&as_user=true")
             #DEBUG
             text = '\033[91m'+"HELLO SENT"+m["user"]["id"]+'\033[0m'
             logger.info(text)
@@ -41,7 +41,7 @@ def parse_join(message):
 
 #Connects to Slacks and initiates socket handshake
 def start_rtm():
-    r = requests.get("https://concur-blue.slack.com/api/rtm.start?token="+TOKEN, verify=False)
+    r = requests.get("https://slack.com/api/rtm.start?token="+TOKEN, verify=False)
     logger = logging.getLogger("slack-bot")
     text = r.text
     logger.info(text)
