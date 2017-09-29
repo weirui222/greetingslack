@@ -40,9 +40,8 @@ def parse_join(message):
 #Connects to Slacks and initiates socket handshake
 def start_rtm():
     r = requests.get("https://concur-blue.slack.com/api/rtm.start?token="+TOKEN, verify=False)
+    print r.text
     r = r.json()
-    print "JSON Decode using Response"
-    print r
     r = r["url"]
     return r
 
