@@ -3,6 +3,8 @@ import json
 import requests
 import urllib
 import os
+import logging
+import inspect
 
 
 # Suppress InsecureRequestWarning
@@ -57,6 +59,9 @@ def on_open(ws):
 
 
 if __name__ == "__main__":
+    print(inspect.getsource(logging))
+
+    #logger._logger = None
     r = start_rtm()
     ws = websocket.WebSocketApp(r, on_message = on_message, on_error = on_error, on_close = on_close)
     #ws.on_open
