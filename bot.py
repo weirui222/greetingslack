@@ -57,7 +57,7 @@ def on_message(ws, message):
 def on_error(ws, error):
     logger = logging.getLogger()
     logger.setLevel(logging.DEBUG)
-    logger.error("SOME ERROR HAS HAPPENED", error)
+    logger.error("SOME ERROR HAS HAPPENED"+error)
 
 def on_close(ws):
     logger = logging.getLogger()
@@ -80,7 +80,7 @@ if __name__ == "__main__":
     wsLogger.propagate = True
 
     r = start_rtm()
-    logger.info("WebSocket URL:", r)
+    logger.info("WebSocket URL:"+r)
 
     logger.info("Started WebSocketApp.")
     ws = websocket.WebSocketApp(r, on_message = on_message, on_error = on_error, on_close = on_close)
