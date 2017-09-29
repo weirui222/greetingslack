@@ -62,7 +62,7 @@ def on_close(ws):
 
 def on_open(ws):
     logger = logging.getLogger("slack-bot")
-    logger.info "Connection Started - Auto Greeting new joiners to the network"
+    logger.info("Connection Started - Auto Greeting new joiners to the network")
 
 
 if __name__ == "__main__":
