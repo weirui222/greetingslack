@@ -59,5 +59,5 @@ def on_open(ws):
 if __name__ == "__main__":
     r = start_rtm()
     ws = websocket.WebSocketApp(r, on_message = on_message, on_error = on_error, on_close = on_close)
-    #ws.on_open
+    ws.on_open
     ws.run_forever()
