@@ -39,7 +39,10 @@ def parse_join(message):
 
 #Connects to Slacks and initiates socket handshake
 def start_rtm():
+    print("Inside of start_rtm.")
     r = requests.get("https://concur-blue.slack.com/api/rtm.start?token="+TOKEN, verify=False)
+    print("r: " + r)
+    
     r = r.json()
     print r
     r = r["url"]
@@ -63,7 +66,15 @@ if __name__ == "__main__":
     print(inspect.getsource(logging))
     print("Finished Inspection of logging.")
 
+    print("Started start_rtm.")
     r = start_rtm()
+    print("Finished start_rtm.")
+
+    print("Started WebSocketApp.")
     ws = WebSocketApp(r, on_message = on_message, on_error = on_error, on_close = on_close)
+    print("Finished WebSocketApp.")
     #ws.on_open
+
+    print("Started ws.run_forever.")
     ws.run_forever()
+    print("Finished ws.run_forever.")
