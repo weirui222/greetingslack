@@ -23,6 +23,7 @@ except:
 ###############################################################
 
 def parse_join(message):
+    logger = logging.getLogger("slack-bot")
     m = json.loads(message)
     if (m['type'] == "member_joined_channel"):
         if(m['channel'] == "C4XU7ULUA"):
@@ -34,14 +35,15 @@ def parse_join(message):
             else:
               xx = requests.post("https://concur-blue.slack.com/api/chat.postMessage?token="+TOKEN+"&channel="+x+"&text="+urllib.quote(MESSAGE)+"&parse=full&as_user=true")
             #DEBUG
-            #print '\033[91m' + "HELLO SENT" + m["user"]["id"] + '\033[0m'
+            logger.info '\033[91m' + "HELLO SENT" + m["user"]["id"] + '\033[0m'
             #
 
 #Connects to Slacks and initiates socket handshake
 def start_rtm():
     r = requests.get("https://concur-blue.slack.com/api/rtm.start?token="+TOKEN, verify=False)
     logger = logging.getLogger("slack-bot")
-    logger.info r.text
+    text = r.text
+    logger.info text
     r = r.json()
     r = r["url"]
     return r
@@ -50,13 +52,16 @@ def on_message(ws, message):
     parse_join(message)
 
 def on_error(ws, error):
-    _logging.error "SOME ERROR HAS HAPPENED", error
+    logger = logging.getLogger("slack-bot")
+    logger.error "SOME ERROR HAS HAPPENED", error
 
 def on_close(ws):
-    _logging.warn '\033[91m'+"Connection Closed"+'\033[0m'
+    logger = logging.getLogger("slack-bot")
+    logger.warn '\033[91m'+"Connection Closed"+'\033[0m'
 
 def on_open(ws):
-    _logging.warn "Connection Started - Auto Greeting new joiners to the network"
+    logger = logging.getLogger("slack-bot")
+    logger.info "Connection Started - Auto Greeting new joiners to the network"
 
 
 if __name__ == "__main__":
