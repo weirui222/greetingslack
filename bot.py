@@ -40,7 +40,8 @@ def parse_join(message):
 #Connects to Slacks and initiates socket handshake
 def start_rtm():
     r = requests.get("https://concur-blue.slack.com/api/rtm.start?token="+TOKEN, verify=False)
-    print r.text
+    logger = logging.getLogger("slack-bot")
+    logger.info r.text
     r = r.json()
     r = r["url"]
     return r
@@ -49,24 +50,26 @@ def on_message(ws, message):
     parse_join(message)
 
 def on_error(ws, error):
-    print "SOME ERROR HAS HAPPENED", error
+    _logging.error "SOME ERROR HAS HAPPENED", error
 
 def on_close(ws):
-    print '\033[91m'+"Connection Closed"+'\033[0m'
+    _logging.warn '\033[91m'+"Connection Closed"+'\033[0m'
 
 def on_open(ws):
-    print "Connection Started - Auto Greeting new joiners to the network"
+    _logging.warn "Connection Started - Auto Greeting new joiners to the network"
 
 
 if __name__ == "__main__":
-    r = start_rtm()
-    print "WebSocket URL:", r
+    logger = logging.getLogger("slack-bot")
 
-    print("Started WebSocketApp.")
+    r = start_rtm()
+    logger.info "WebSocket URL:", r
+
+    logger.info "Started WebSocketApp."
     ws = websocket.WebSocketApp(r, on_message = on_message, on_error = on_error, on_close = on_close)
-    print("Finished WebSocketApp.")
+    logger.info "Finished WebSocketApp."
     #ws.on_open
 
-    print("Started ws.run_forever.")
+    logger.info "Started ws.run_forever."
     ws.run_forever()
-    print("Finished ws.run_forever.")
+    logger.info "Finished ws.run_forever."
