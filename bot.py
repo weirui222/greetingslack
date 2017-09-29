@@ -24,6 +24,8 @@ except:
 
 def parse_join(message):
     logger = logging.getLogger("slack-bot")
+    logger.setLevel(logging.DEBUG)
+    logger.propagate = True
     m = json.loads(message)
     if (m['type'] == "member_joined_channel"):
         if(m['channel'] == "C4XU7ULUA"):
@@ -43,6 +45,8 @@ def parse_join(message):
 def start_rtm():
     r = requests.get("https://slack.com/api/rtm.start?token="+TOKEN, verify=False)
     logger = logging.getLogger("slack-bot")
+    logger.setLevel(logging.DEBUG)
+    logger.propagate = True
     text = r.text
     logger.info(text)
     r = r.json()
@@ -54,14 +58,20 @@ def on_message(ws, message):
 
 def on_error(ws, error):
     logger = logging.getLogger("slack-bot")
+    logger.setLevel(logging.DEBUG)
+    logger.propagate = True
     logger.error("SOME ERROR HAS HAPPENED", error)
 
 def on_close(ws):
     logger = logging.getLogger("slack-bot")
+    logger.setLevel(logging.DEBUG)
+    logger.propagate = True
     logger.warn('\033[91m'+"Connection Closed"+'\033[0m')
 
 def on_open(ws):
     logger = logging.getLogger("slack-bot")
+    logger.setLevel(logging.DEBUG)
+    logger.propagate = True
     logger.info("Connection Started - Auto Greeting new joiners to the network")
 
 
