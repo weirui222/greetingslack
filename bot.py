@@ -23,9 +23,8 @@ except:
 ###############################################################
 
 def parse_join(message):
-    logger = logging.getLogger("slack-bot")
+    logger = logging.getLogger()
     logger.setLevel(logging.DEBUG)
-    logger.propagate = True
     m = json.loads(message)
     if (m['type'] == "member_joined_channel"):
         if(m['channel'] == "C4XU7ULUA"):
@@ -44,9 +43,8 @@ def parse_join(message):
 #Connects to Slacks and initiates socket handshake
 def start_rtm():
     r = requests.get("https://slack.com/api/rtm.start?token="+TOKEN, verify=False)
-    logger = logging.getLogger("slack-bot")
+    logger = logging.getLogger()
     logger.setLevel(logging.DEBUG)
-    logger.propagate = True
     text = r.text
     logger.info(text)
     r = r.json()
@@ -57,31 +55,24 @@ def on_message(ws, message):
     parse_join(message)
 
 def on_error(ws, error):
-    logger = logging.getLogger("slack-bot")
+    logger = logging.getLogger()
     logger.setLevel(logging.DEBUG)
-    logger.propagate = True
     logger.error("SOME ERROR HAS HAPPENED", error)
 
 def on_close(ws):
-    logger = logging.getLogger("slack-bot")
+    logger = logging.getLogger()
     logger.setLevel(logging.DEBUG)
-    logger.propagate = True
     logger.warn('\033[91m'+"Connection Closed"+'\033[0m')
 
 def on_open(ws):
-    logger = logging.getLogger("slack-bot")
+    logger = logging.getLogger()
     logger.setLevel(logging.DEBUG)
-    logger.propagate = True
     logger.info("Connection Started - Auto Greeting new joiners to the network")
 
 
 if __name__ == "__main__":
-    root_logger = logging.getLogger()
-    root_logger.setLevel(logging.DEBUG)
-
-    logger = logging.getLogger("slack-bot")
+    logger = logging.getLogger()
     logger.setLevel(logging.DEBUG)
-    logger.propagate = True
 
     wsLogger = logging.getLogger("websocket")
     wsLogger.setLevel(logging.DEBUG)
