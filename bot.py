@@ -30,7 +30,7 @@ def parse_join(message):
         if(m['channel'] == "C4XU7ULUA"): #ask-faraday
             x = requests.get("https://slack.com/api/im.open?token="+TOKEN+"&user="+m["user"])
             x = x.json()
-            x = x["channel"]
+            x = x["channel"]["id"]
             if (UNFURL.lower() == "false"):
               xx = requests.post("https://slack.com/api/chat.postMessage?token="+TOKEN+"&channel="+x+"&text="+urllib.quote(MESSAGE)+"&parse=full&as_user=true&unfurl_links=false")
             else:
