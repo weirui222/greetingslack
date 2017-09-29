@@ -35,8 +35,8 @@ def parse_join(message):
             else:
               xx = requests.post("https://concur-blue.slack.com/api/chat.postMessage?token="+TOKEN+"&channel="+x+"&text="+urllib.quote(MESSAGE)+"&parse=full&as_user=true")
             #DEBUG
-            text = '\033[91m' + "HELLO SENT" + m["user"]["id"] + '\033[0m'
-            logger.info text
+            text = '\033[91m'+"HELLO SENT"+m["user"]["id"]+'\033[0m'
+            logger.info(text)
             #
 
 #Connects to Slacks and initiates socket handshake
@@ -44,7 +44,7 @@ def start_rtm():
     r = requests.get("https://concur-blue.slack.com/api/rtm.start?token="+TOKEN, verify=False)
     logger = logging.getLogger("slack-bot")
     text = r.text
-    logger.info text
+    logger.info(text)
     r = r.json()
     r = r["url"]
     return r
@@ -54,11 +54,11 @@ def on_message(ws, message):
 
 def on_error(ws, error):
     logger = logging.getLogger("slack-bot")
-    logger.error "SOME ERROR HAS HAPPENED", error
+    logger.error("SOME ERROR HAS HAPPENED", error)
 
 def on_close(ws):
     logger = logging.getLogger("slack-bot")
-    logger.warn '\033[91m'+"Connection Closed"+'\033[0m'
+    logger.warn('\033[91m'+"Connection Closed"+'\033[0m')
 
 def on_open(ws):
     logger = logging.getLogger("slack-bot")
@@ -69,13 +69,13 @@ if __name__ == "__main__":
     logger = logging.getLogger("slack-bot")
 
     r = start_rtm()
-    logger.info "WebSocket URL:", r
+    logger.info("WebSocket URL:", r)
 
-    logger.info "Started WebSocketApp."
+    logger.info("Started WebSocketApp.")
     ws = websocket.WebSocketApp(r, on_message = on_message, on_error = on_error, on_close = on_close)
-    logger.info "Finished WebSocketApp."
+    logger.info("Finished WebSocketApp.")
     #ws.on_open
 
-    logger.info "Started ws.run_forever."
+    logger.info("Started ws.run_forever.")
     ws.run_forever()
-    logger.info "Finished ws.run_forever."
+    logger.info("Finished ws.run_forever.")
