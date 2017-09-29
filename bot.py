@@ -41,9 +41,8 @@ def parse_join(message):
 def start_rtm():
     print("Inside of start_rtm.")
     r = requests.get("https://concur-blue.slack.com/api/rtm.start?token="+TOKEN, verify=False)
-    print("r: " + r)
-    
     r = r.json()
+    print("r: " + r)
     print r
     r = r["url"]
     return r
