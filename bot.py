@@ -24,20 +24,20 @@ def parse_join(message):
     m = json.loads(message)
     if (m['type'] == "member_joined_channel"):
         if(m['channel'] == "C4XU7ULUA"):
-            x = requests.get("https://slack.com/api/im.open?token="+TOKEN+"&user="+m["user"]["id"])
+            x = requests.get("https://concur-blue.slack.com/api/im.open?token="+TOKEN+"&user="+m["user"]["id"])
             x = x.json()
             x = x["channel"]["id"]
             if (UNFURL.lower() == "false"):
-              xx = requests.post("https://slack.com/api/chat.postMessage?token="+TOKEN+"&channel="+x+"&text="+urllib.quote(MESSAGE)+"&parse=full&as_user=true&unfurl_links=false")
+              xx = requests.post("https://concur-blue.slack.com/api/chat.postMessage?token="+TOKEN+"&channel="+x+"&text="+urllib.quote(MESSAGE)+"&parse=full&as_user=true&unfurl_links=false")
             else:
-              xx = requests.post("https://slack.com/api/chat.postMessage?token="+TOKEN+"&channel="+x+"&text="+urllib.quote(MESSAGE)+"&parse=full&as_user=true")
+              xx = requests.post("https://concur-blue.slack.com/api/chat.postMessage?token="+TOKEN+"&channel="+x+"&text="+urllib.quote(MESSAGE)+"&parse=full&as_user=true")
             #DEBUG
             #print '\033[91m' + "HELLO SENT" + m["user"]["id"] + '\033[0m'
             #
 
 #Connects to Slacks and initiates socket handshake
 def start_rtm():
-    r = requests.get("https://slack.com/api/rtm.start?token="+TOKEN, verify=False)
+    r = requests.get("https://concur-blue.slack.com/api/rtm.start?token="+TOKEN, verify=False)
     r = r.json()
     print r
     r = r["url"]
@@ -59,5 +59,5 @@ def on_open(ws):
 if __name__ == "__main__":
     r = start_rtm()
     ws = websocket.WebSocketApp(r, on_message = on_message, on_error = on_error, on_close = on_close)
-    ws.on_open
+    #ws.on_open
     ws.run_forever()
