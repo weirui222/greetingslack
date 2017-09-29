@@ -71,6 +71,7 @@ def on_open(ws):
 
 
 if __name__ == "__main__":
+    logging.basicConfig()
     logger = logging.getLogger()
     logger.setLevel(logging.DEBUG)
 
