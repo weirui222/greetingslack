@@ -59,9 +59,10 @@ def on_open(ws):
 
 
 if __name__ == "__main__":
+    print("Started Inspection of logging.")
     print(inspect.getsource(logging))
+    print("Finished Inspection of logging.")
 
-    #logger._logger = None
     r = start_rtm()
     ws = WebSocketApp(r, on_message = on_message, on_error = on_error, on_close = on_close)
     #ws.on_open
